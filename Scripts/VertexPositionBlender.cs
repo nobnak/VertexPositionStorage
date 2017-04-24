@@ -6,8 +6,9 @@ namespace VertexPositionStorage {
 
     [ExecuteInEditMode]
     public class VertexPositionBlender : MonoBehaviour {
-        public string propVertexPosition = "_VertesPositions";
+        public string propVertexPosition = "_VertexPositions";
         public GameObject referenceObject;
+        public bool autoStartOnAwake = false;
 
         Storage capture;
         Renderer attachedRenderer;
@@ -22,7 +23,10 @@ namespace VertexPositionStorage {
             attachedRenderer.sharedMaterial.SetBuffer (propVertexPosition, capture.GPUBuffer);
         }
         void OnDisable() {
-            capture.Dispose ();
+            if (capture != null) {
+                capture.Dispose ();
+                capture = null;
+            }
         }
         #endregion
     }
