@@ -8,7 +8,6 @@ namespace VertexPositionStorage {
     public class VertexPositionBlender : MonoBehaviour {
         public string propVertexPosition = "_VertexPositions";
         public GameObject referenceObject;
-        public bool autoStartOnAwake = false;
 
         Storage capture;
         Renderer attachedRenderer;
