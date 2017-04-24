@@ -3,7 +3,7 @@
 		_MainTex ("Texture", 2D) = "white" {}
         _PositionBlend ("Position Blend", Range(0,1)) = 0
         _Variation ("Blend Variation", Range(0,10)) = 0
-        _UVBobbin ("UV Bobbin", Range(0.01, 0.1)) = 0.1
+        _UVBobbin ("UV Bobbin", Vector) = (1, 1, 1, 1)
 	}
 	SubShader {
 		Tags { "RenderType"="Opaque" }
@@ -33,16 +33,17 @@
 			float4 _MainTex_ST;
             float _PositionBlend;
             float _Variation;
-            float _UVBobbin;
+            float2 _UVBobbin;
 			
 			v2f vert (appdata v) {
                 float b = LinearVariationalBlend(_Variation, _PositionBlend, 
-                    dot(v.uv, float2(1.0-_UVBobbin, _UVBobbin)));
+                    frac(dot(v.uv, _UVBobbin)));
                 float3 worldPos = mul(unity_ObjectToWorld, v.vertex);
                 worldPos = BlendWorldPosition(v.vid, worldPos, b);
+                v.vertex.xyz = mul(unity_WorldToObject, float4(worldPos, 1));
 
 				v2f o;
-				o.vertex = mul(UNITY_MATRIX_VP, float4(worldPos, 1));
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 				return o;
 			}
