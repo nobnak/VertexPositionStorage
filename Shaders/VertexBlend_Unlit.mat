@@ -25,6 +25,7 @@ Material:
     - _PositionBlend: 0
     - _UVBobbin: 0.01
     - _UVBobbin2: 0.1
-    - _Variation: 10
+    - _Variation: 3
     m_Colors:
-    - _UVBobbin: {r: 100, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.685, g: 0.685, b: 0.685, a: 1}
+    - _UVBobbin: {r: 7, g: 61, b: 1, a: 1}

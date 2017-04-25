@@ -1,6 +1,9 @@
 ﻿Shader "VertexBlend/Unlit" {
 	Properties {
 		_MainTex ("Texture", 2D) = "white" {}
+        _Color ("Color", Color) = (1,1,1,1)
+
+        [Header(Vertex Position Blend)]
         _PositionBlend ("Position Blend", Range(0,1)) = 0
         _Variation ("Blend Variation", Range(0,10)) = 0
         _UVBobbin ("UV Bobbin", Vector) = (1, 1, 1, 1)
@@ -16,7 +19,7 @@
 			#pragma fragment frag
 			
 			#include "UnityCG.cginc"
-            #include "VertexBlend.cginc"
+            #include "VertexBlendSample.cginc"
 
 			struct appdata {
                 uint vid : SV_VertexID;
@@ -31,16 +34,10 @@
 
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
-            float _PositionBlend;
-            float _Variation;
-            float2 _UVBobbin;
+            float4 _Color;
 			
 			v2f vert (appdata v) {
-                float b = LinearVariationalBlend(_Variation, _PositionBlend, 
-                    frac(dot(v.uv, _UVBobbin)));
-                float3 worldPos = mul(unity_ObjectToWorld, v.vertex);
-                worldPos = BlendWorldPosition(v.vid, worldPos, b);
-                v.vertex.xyz = mul(unity_WorldToObject, float4(worldPos, 1));
+                v.vertex.xyz = UVVariationalLocalPosition(v.vid, v.uv, v.vertex.xyz);
 
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
@@ -49,7 +46,7 @@
 			}
 			
 			fixed4 frag (v2f i) : SV_Target {
-				fixed4 col = tex2D(_MainTex, i.uv);
+				fixed4 col = tex2D(_MainTex, i.uv) * _Color;
 				return col;
 			}
 			ENDCG
