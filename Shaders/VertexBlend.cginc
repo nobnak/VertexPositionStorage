@@ -25,7 +25,7 @@ float3 GetTargetWorldPosition(uint vertexIndex) {
 float3 BlendPosition(uint vertexIndex, float3 srcPos, float blendRatio, float4x4 dstIntoSrcSpace) {
     #ifdef SHADER_API_D3D11
     float3 dstPos = GetTargetWorldPosition(vertexIndex);
-    dstPos = mul(dstIntoSrcSpace, dstPos);
+    dstPos = mul(dstIntoSrcSpace, float4(dstPos, 1));
     srcPos = lerp(srcPos, dstPos, blendRatio);
     #endif
     return srcPos;
