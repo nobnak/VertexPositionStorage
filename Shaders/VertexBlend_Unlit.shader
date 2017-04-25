@@ -4,9 +4,9 @@
         _Color ("Color", Color) = (1,1,1,1)
 
         [Header(Vertex Position Blend)]
-        _PositionBlend ("Position Blend", Range(0,1)) = 0
-        _Variation ("Blend Variation", Range(0,10)) = 0
-        _UVBobbin ("UV Bobbin", Vector) = (1, 1, 1, 1)
+        _VertexPositionBlend_Blend ("Position Blend", Range(0,1)) = 0
+        _VertexPositionBlend_Variation ("Blend Variation", Range(0,10)) = 0
+        _VertexPositionBlend_UVBobbin ("UV Bobbin", Vector) = (1, 1, 1, 1)
 	}
 	SubShader {
 		Tags { "RenderType"="Opaque" }

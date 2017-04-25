@@ -3,12 +3,13 @@
 
 #include "VertexBlend.cginc"
 
-float _PositionBlend;
-float _Variation;
-float2 _UVBobbin;
+float _VertexPositionBlend_Blend;
+float _VertexPositionBlend_Variation;
+float2 _VertexPositionBlend_UVBobbin;
 			
 float3 UVVariationalLocalPosition(uint vid, float2 uv, float3 localPos) {
-    float b = LinearVariationalBlend(_Variation, _PositionBlend, frac(dot(uv, _UVBobbin)));
+    float b = LinearVariationalBlend(_VertexPositionBlend_Variation, _VertexPositionBlend_Blend, 
+        frac(dot(uv, _VertexPositionBlend_UVBobbin)));
     return BlendLocalPosition(vid, localPos, b);
 }
 
