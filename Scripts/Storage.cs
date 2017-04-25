@@ -32,8 +32,17 @@ namespace VertexPositionStorage {
                 vertices [i] = m.MultiplyPoint3x4 (vertices [i]);
             ApplyVertices (vertices);
         }
-        public void Capture() {
+        public void CaptureLocal() {
             Capture (Matrix4x4.identity);
+        }
+        public void CaptureWorld(bool preScaled = false) {
+            var m = skin.localToWorldMatrix;
+            if (preScaled) {
+                var scale = skin.transform.lossyScale;
+                scale = new Vector3 (1f / scale.x, 1f / scale.y, 1f / scale.z);
+                m *= Matrix4x4.Scale (scale);
+            }
+            Capture (m);
         }
 
         Vector3[] CaptureVertices() {
