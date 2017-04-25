@@ -24,5 +24,7 @@ Material:
     m_Floats:
     - _PositionBlend: 0
     - _UVBobbin: 0.01
-    - _Variation: 3
-    m_Colors: []
+    - _UVBobbin2: 0.1
+    - _Variation: 10
+    m_Colors:
+    - _UVBobbin: {r: 100, g: 1, b: 1, a: 1}
