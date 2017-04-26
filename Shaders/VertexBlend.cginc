@@ -20,7 +20,11 @@ float LinearVariationalBlend(float variation, float blendRatio, float x) {
     return VERTEX_BLEND_FUNC(variation, blendRatio, x);
 }
 float3 GetTargetWorldPosition(uint vertexIndex) {
+    #ifdef SHADER_API_D3D11
     return _VertexPositions[vertexIndex];
+    #else
+    return 0;
+    #endif
 }
 float3 BlendPosition(uint vertexIndex, float3 srcPos, float blendRatio, float4x4 dstIntoSrcSpace) {
     #ifdef SHADER_API_D3D11
