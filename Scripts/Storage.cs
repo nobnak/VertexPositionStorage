@@ -36,6 +36,9 @@ namespace VertexPositionStorage {
             Capture (Matrix4x4.identity);
         }
         public void CaptureWorld(bool preScaled = false) {
+            if (skin == null)
+                return;
+            
             var m = skin.localToWorldMatrix;
             if (preScaled) {
                 var scale = skin.transform.lossyScale;
