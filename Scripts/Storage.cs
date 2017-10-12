@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Gist;
+using Gist.GPUBuffer;
 
 namespace VertexPositionStorage {
 
     public class Storage : System.IDisposable {
         SkinnedMeshRenderer skin;
-        GPUArray<Vector3> gpuVertexPositions;
+        GPUList<Vector3> gpuVertexPositions;
         Mesh animatedMesh;
 
         public Storage(SkinnedMeshRenderer skin) {
             this.skin = skin;
             this.animatedMesh = new Mesh ();
-            this.gpuVertexPositions = new GPUArray<Vector3> (skin.sharedMesh.vertexCount);
+            this.gpuVertexPositions = new GPUList<Vector3> (skin.sharedMesh.vertexCount);
         }
 
         #region IDisposable implementation
@@ -24,7 +25,7 @@ namespace VertexPositionStorage {
         #endregion
 
         public ComputeBuffer GPUBuffer {
-            get { return gpuVertexPositions.GPUBuffer; }
+            get { return gpuVertexPositions.Buffer; }
         }
         public void Capture(Matrix4x4 m) {
             var vertices = CaptureVertices ();
@@ -53,7 +54,7 @@ namespace VertexPositionStorage {
             return animatedMesh.vertices;
         }
         void ApplyVertices(Vector3[] vertices) {
-            System.Array.Copy (vertices, gpuVertexPositions.CPUBuffer, vertices.Length);
+            System.Array.Copy (vertices, gpuVertexPositions.Data, vertices.Length);
             gpuVertexPositions.Upload ();
         }
         void Release<T>(ref T obj) where T : Object {
