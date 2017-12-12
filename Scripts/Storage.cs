@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Gist;
-using Gist.GPUBuffer;
+using nobnak.Gist;
+using nobnak.Gist.GPUBuffer;
 
 namespace VertexPositionStorage {
 
