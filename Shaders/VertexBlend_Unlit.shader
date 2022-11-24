@@ -19,7 +19,7 @@
 			#pragma fragment frag
 			
 			#include "UnityCG.cginc"
-            #include "VertexBlendSample.cginc"
+            #include_with_pragmas "VertexBlend.cginc"
 
 			struct appdata {
                 uint vid : SV_VertexID;
@@ -37,7 +37,11 @@
             float4 _Color;
 			
 			v2f vert (appdata v) {
-                v.vertex.xyz = UVVariationalLocalPosition(v.vid, v.uv, v.vertex.xyz);
+				float3 world_pos0 = mul(unity_ObjectToWorld, float4(v.vertex.xyz, 1)).xyz;
+				float3 world_pos1 = GetTargetWorldPosition(v.vid);
+				float b = UVVariationalBlend(v.uv);
+				float3 world_pos = lerp(world_pos0, world_pos1, b);
+				v.vertex.xyz = mul(unity_WorldToObject, float4(world_pos, 1)).xyz;
 
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);

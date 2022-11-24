@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using nobnak.Gist;
@@ -49,8 +49,8 @@ namespace VertexPositionStorage {
             Capture (m);
         }
 
-        Vector3[] CaptureVertices() {
-            skin.BakeMesh (animatedMesh);
+        Vector3[] CaptureVertices(bool useScale = false) {
+            skin.BakeMesh (animatedMesh, useScale);
             return animatedMesh.vertices;
         }
         void ApplyVertices(Vector3[] vertices) {
